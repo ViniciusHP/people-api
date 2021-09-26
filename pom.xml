@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>one.digitalinnovation</groupId>
-	<artifactId>personapi</artifactId>
+	<artifactId>peopleapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>personapi</name>
 	<description>Person API project</description>
