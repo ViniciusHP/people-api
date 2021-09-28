@@ -1,7 +1,8 @@
 package one.digitalinnovation.peopleapi.service;
 
-import one.digitalinnovation.peopleapi.dto.response.MessageResponseDTO;
+import lombok.AllArgsConstructor;
 import one.digitalinnovation.peopleapi.dto.request.PersonDTO;
+import one.digitalinnovation.peopleapi.dto.response.MessageResponseDTO;
 import one.digitalinnovation.peopleapi.entity.Person;
 import one.digitalinnovation.peopleapi.exception.PersonNotFoundException;
 import one.digitalinnovation.peopleapi.mapper.PersonMapper;
@@ -10,20 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
     private PersonRepository personRepository;
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
-
-    @Autowired
-    public PersonService(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
 
     public MessageResponseDTO createPerson(PersonDTO personDTO) {
         Person personToSave = personMapper.toModel(personDTO);
