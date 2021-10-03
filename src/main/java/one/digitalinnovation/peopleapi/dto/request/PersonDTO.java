@@ -4,19 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import one.digitalinnovation.peopleapi.entity.Phone;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.hateoas.server.core.Relation;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Relation(collectionRelation = "personList")
 public class PersonDTO {
 
     private Long id;
