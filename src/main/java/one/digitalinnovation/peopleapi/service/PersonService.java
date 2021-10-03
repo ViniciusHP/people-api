@@ -8,6 +8,8 @@ import one.digitalinnovation.peopleapi.exception.PersonNotFoundException;
 import one.digitalinnovation.peopleapi.mapper.PersonMapper;
 import one.digitalinnovation.peopleapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +20,14 @@ import java.util.stream.Collectors;
 public class PersonService {
 
     private PersonRepository personRepository;
+    private MessageSource messageSource;
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
     public MessageResponseDTO createPerson(PersonDTO personDTO) {
         Person personToSave = personMapper.toModel(personDTO);
         Person savedPerson = personRepository.save(personToSave);
-        return createMessageResponse(savedPerson.getId(), "Created person with ID ");
+        return createMessageResponse(savedPerson.getId(), "person.created");
     }
 
     public List<PersonDTO> listAll() {
@@ -49,7 +52,7 @@ public class PersonService {
 
         Person personToUpdate = personMapper.toModel(personDTO);
         Person updatePerson = personRepository.save(personToUpdate);
-        return createMessageResponse(updatePerson.getId(), "Updated person with ID ");
+        return createMessageResponse(updatePerson.getId(), "person.updated");
     }
 
     private Person verifyIfExists(Long id) throws PersonNotFoundException {
@@ -57,11 +60,12 @@ public class PersonService {
                 .orElseThrow(() -> new PersonNotFoundException(id));
     }
 
-    private MessageResponseDTO createMessageResponse(Long id, String message) {
+    private MessageResponseDTO createMessageResponse(Long id, String messageCode) {
+        String message = messageSource.getMessage(messageCode, new Object[]{id}, LocaleContextHolder.getLocale());
         return MessageResponseDTO
                 .builder()
                 .id(id)
-                .message(message + id)
+                .message(message)
                 .build();
     }
 }
